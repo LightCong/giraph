@@ -22,6 +22,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 import org.apache.giraph.utils.WritableUtils;
+import org.apache.giraph.writable.kryo.markers.KryoIgnoreWritable;
 import org.apache.hadoop.io.Writable;
 
 /**
@@ -35,7 +36,7 @@ import org.apache.hadoop.io.Writable;
  *
  * @param <T> Object type
  */
-public class KryoWritableWrapper<T> implements Writable {
+public final class KryoWritableWrapper<T> implements KryoIgnoreWritable {
   /** Wrapped object */
   private T object;
 
@@ -87,7 +88,9 @@ public class KryoWritableWrapper<T> implements Writable {
    * @return Writable object holding argument
    */
   public static Writable wrapIfNeeded(Object object) {
-    if (object instanceof Writable) {
+    if ((object instanceof Writable) &&
+        // to make object == unwrapIfNeeded(wrapIfNeeded(object))
+        !(object instanceof KryoWritableWrapper)) {
       return (Writable) object;
     } else {
       return new KryoWritableWrapper<>(object);

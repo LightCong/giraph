@@ -24,6 +24,7 @@ import org.apache.giraph.block_app.framework.piece.global_comm.ReduceUtilsObject
 import org.apache.giraph.block_app.framework.piece.global_comm.ReducerHandle;
 import org.apache.giraph.block_app.framework.piece.global_comm.internal.CreateReducersApiWrapper;
 import org.apache.giraph.block_app.framework.piece.global_comm.internal.ReducersForPieceHandler;
+import org.apache.giraph.block_app.framework.piece.global_comm.map.MapHandle;
 import org.apache.giraph.block_app.framework.piece.interfaces.VertexPostprocessor;
 import org.apache.giraph.block_app.framework.piece.interfaces.VertexSender;
 import org.apache.giraph.block_app.framework.piece.messages.ObjectMessageClasses;
@@ -40,10 +41,12 @@ import org.apache.giraph.conf.MessageClasses;
 import org.apache.giraph.factories.MessageValueFactory;
 import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.types.NoMessage;
+import org.apache.hadoop.io.ByteWritable;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.ShortWritable;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableComparable;
 
@@ -322,5 +325,31 @@ public abstract class DefaultParentPiece<I extends WritableComparable,
   protected final void reduceInt(
       ReducerHandle<IntWritable, ?> reduceHandle, int value) {
     reduceUtils.reduceInt(reduceHandle, value);
+  }
+
+  protected final void reduceShort(
+      ReducerHandle<ShortWritable, ?> reduceHandle, short value) {
+    reduceUtils.reduceShort(reduceHandle, value);
+  }
+
+  protected final void reduceByte(
+      ReducerHandle<ByteWritable, ?> reduceHandle, byte value) {
+    reduceUtils.reduceByte(reduceHandle, value);
+  }
+
+  public <T> T getMappedLong(MapHandle<LongWritable, T> map, long value) {
+    return reduceUtils.getMappedLong(map, value);
+  }
+
+  public <T> T getMappedInt(MapHandle<IntWritable, T> map, int value) {
+    return reduceUtils.getMappedInt(map, value);
+  }
+
+  public <T> T getMappedShort(MapHandle<ShortWritable, T> map, short value) {
+    return reduceUtils.getMappedShort(map, value);
+  }
+
+  public <T> T getMappedByte(MapHandle<ByteWritable, T> map, byte value) {
+    return reduceUtils.getMappedByte(map, value);
   }
 }

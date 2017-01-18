@@ -20,6 +20,7 @@ package org.apache.giraph.conf;
 import org.apache.giraph.utils.ReflectionUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.log4j.Logger;
+import org.python.google.common.base.Preconditions;
 
 import com.google.common.base.Objects;
 
@@ -178,6 +179,7 @@ public class ClassConfOption<C> extends AbstractConfOption {
    * @param klass Class to set
    */
   public void set(Configuration conf, Class<? extends C> klass) {
+    Preconditions.checkNotNull(klass);
     conf.setClass(getKey(), klass, interfaceClass);
   }
 

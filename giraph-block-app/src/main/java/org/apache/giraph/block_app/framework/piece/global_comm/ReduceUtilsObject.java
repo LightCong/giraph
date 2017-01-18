@@ -17,10 +17,13 @@
  */
 package org.apache.giraph.block_app.framework.piece.global_comm;
 
+import org.apache.giraph.block_app.framework.piece.global_comm.map.MapHandle;
+import org.apache.hadoop.io.ByteWritable;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.ShortWritable;
 
 /**
  * Utility object with common primitive reduce operations,
@@ -31,6 +34,8 @@ public class ReduceUtilsObject {
   private final FloatWritable reusableFloat = new FloatWritable();
   private final LongWritable reusableLong = new LongWritable();
   private final IntWritable reusableInt = new IntWritable();
+  private final ShortWritable reusableShort = new ShortWritable();
+  private final ByteWritable reusableByte = new ByteWritable();
 
   // utility functions:
   public void reduceDouble(
@@ -58,5 +63,41 @@ public class ReduceUtilsObject {
     IntWritable tmp = reusableInt;
     tmp.set(value);
     reduceHandle.reduce(tmp);
+  }
+
+  public void reduceShort(ReducerHandle<ShortWritable, ?> reduceHandle, short value) {
+    ShortWritable tmp = reusableShort;
+    tmp.set(value);
+    reduceHandle.reduce(tmp);
+  }
+
+  public void reduceByte(ReducerHandle<ByteWritable, ?> reduceHandle, byte value) {
+    ByteWritable tmp = reusableByte;
+    tmp.set(value);
+    reduceHandle.reduce(tmp);
+  }
+
+  public <V> V getMappedLong(MapHandle<LongWritable, V> map, long value) {
+    LongWritable tmp = reusableLong;
+    tmp.set(value);
+    return map.get(tmp);
+  }
+
+  public <V> V getMappedInt(MapHandle<IntWritable, V> map, int value) {
+    IntWritable tmp = reusableInt;
+    tmp.set(value);
+    return map.get(tmp);
+  }
+
+  public <V> V getMappedShort(MapHandle<ShortWritable, V> map, short value) {
+    ShortWritable tmp = reusableShort;
+    tmp.set(value);
+    return map.get(tmp);
+  }
+
+  public <V> V getMappedByte(MapHandle<ByteWritable, V> map, byte value) {
+    ByteWritable tmp = reusableByte;
+    tmp.set(value);
+    return map.get(tmp);
   }
 }

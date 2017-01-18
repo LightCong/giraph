@@ -49,13 +49,23 @@ public class SyntheticGraphInit<I extends WritableComparable,
             "test.SyntheticGraphCreator.ACTUAL_LOCALITY_RATIO", -1, "");
 
   protected final Supplier<E> edgeSupplier;
+  protected final boolean allowDuplicates;
+
+  public SyntheticGraphInit(Supplier<E> edgeSupplier, boolean allowDuplicates) {
+    this.edgeSupplier = edgeSupplier;
+    this.allowDuplicates = allowDuplicates;
+  }
 
   public SyntheticGraphInit(Supplier<E> edgeSupplier) {
-    this.edgeSupplier = edgeSupplier;
+    this(edgeSupplier, false);
   }
 
   public SyntheticGraphInit() {
-    this.edgeSupplier = null;
+    this(null);
+  }
+
+  public SyntheticGraphInit(boolean allowDuplicates) {
+    this(null, allowDuplicates);
   }
 
   @Override
@@ -79,8 +89,10 @@ public class SyntheticGraphInit<I extends WritableComparable,
             j = random.nextInt(numVertices);
           }
         } while (j == i);
-        graph.addSymmetricEdge(
-            i, j, edgeSupplier != null ? edgeSupplier.get() : null);
+        if (allowDuplicates || graph.getEdge(i, j) == null) {
+          graph.addSymmetricEdge(
+              i, j, edgeSupplier != null ? edgeSupplier.get() : null);
+        }
       }
     }
   }

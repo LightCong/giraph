@@ -32,6 +32,7 @@ import org.apache.giraph.reducers.Reducer;
 import org.apache.giraph.utils.WritableUtils;
 import org.apache.giraph.worker.WorkerBroadcastUsage;
 import org.apache.giraph.worker.WorkerReduceUsage;
+import org.apache.giraph.writable.kryo.KryoWritableWrapper;
 import org.apache.hadoop.io.Writable;
 
 /**
@@ -97,7 +98,7 @@ public class ReducersForPieceHandler implements VertexSenderObserver {
 
     @Override
     public T getBroadcast(WorkerBroadcastUsage worker) {
-      return worker.getBroadcast(name);
+      return KryoWritableWrapper.unwrapIfNeeded(worker.getBroadcast(name));
     }
   }
 

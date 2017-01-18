@@ -90,6 +90,11 @@ public class NumericTestGraph<I extends WritableComparable,
     return testGraph.getVertex(numberToVertexId(vertexId));
   }
 
+  public E getEdge(Number vertexId, Number targetId) {
+    Vertex<I, V, E> vertex = getVertex(vertexId);
+    return vertex != null ? vertex.getEdgeValue(numberToVertexId(targetId)) : null;
+  }
+
   /**
    * Get Vertex Value for a given id.
    */

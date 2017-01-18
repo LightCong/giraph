@@ -46,7 +46,7 @@ public interface BlockMasterApi extends MasterAggregatorUsage,
    * Broadcast given value to all workers for next computation.
    * @param value Value to broadcast
    */
-  <T extends Writable> BroadcastHandle<T> broadcast(T value);
+  <T> BroadcastHandle<T> broadcast(T value);
 
   /**
    * Call this to log a line to command line of the job. Use in moderation -

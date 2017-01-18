@@ -66,6 +66,7 @@ import org.apache.giraph.utils.TestGraph;
 import org.apache.giraph.utils.WritableUtils;
 import org.apache.giraph.worker.WorkerAggregatorDelegator;
 import org.apache.giraph.worker.WorkerGlobalCommUsage;
+import org.apache.giraph.writable.kryo.KryoWritableWrapper;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableComparable;
 
@@ -268,9 +269,9 @@ class InternalApi<I extends WritableComparable, V extends Writable,
   }
 
   @Override
-  public <T extends Writable> BroadcastHandle<T> broadcast(T object) {
+  public <T> BroadcastHandle<T> broadcast(T object) {
     BroadcastHandleImpl<T> handle = new BroadcastHandleImpl<>();
-    broadcast(handle.getName(), object);
+    broadcast(handle.getName(), KryoWritableWrapper.wrapIfNeeded(object));
     return handle;
   }
 

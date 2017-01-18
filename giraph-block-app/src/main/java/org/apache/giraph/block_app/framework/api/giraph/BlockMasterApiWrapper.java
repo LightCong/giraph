@@ -31,6 +31,7 @@ import org.apache.giraph.block_app.framework.piece.global_comm.internal.Reducers
 import org.apache.giraph.conf.ImmutableClassesGiraphConfiguration;
 import org.apache.giraph.master.MasterCompute;
 import org.apache.giraph.reducers.ReduceOperation;
+import org.apache.giraph.writable.kryo.KryoWritableWrapper;
 import org.apache.hadoop.io.Writable;
 
 /**
@@ -118,9 +119,9 @@ final class BlockMasterApiWrapper implements BlockMasterApi,
   }
 
   @Override
-  public <T extends Writable> BroadcastHandle<T> broadcast(T object) {
+  public <T> BroadcastHandle<T> broadcast(T object) {
     BroadcastHandleImpl<T> handle = new BroadcastHandleImpl<>();
-    master.broadcast(handle.getName(), object);
+    master.broadcast(handle.getName(), KryoWritableWrapper.wrapIfNeeded(object));
     return handle;
   }
 
