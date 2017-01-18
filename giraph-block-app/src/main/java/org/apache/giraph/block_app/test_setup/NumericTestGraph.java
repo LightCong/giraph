@@ -92,7 +92,8 @@ public class NumericTestGraph<I extends WritableComparable,
 
   public E getEdge(Number vertexId, Number targetId) {
     Vertex<I, V, E> vertex = getVertex(vertexId);
-    return vertex != null ? vertex.getEdgeValue(numberToVertexId(targetId)) : null;
+    return vertex != null ?
+      vertex.getEdgeValue(numberToVertexId(targetId)) : null;
   }
 
   /**

@@ -59,43 +59,50 @@ public class ReduceUtilsObject {
     reduceHandle.reduce(tmp);
   }
 
-  public void reduceInt(ReducerHandle<IntWritable, ?> reduceHandle, int value) {
+  public void reduceInt(
+      ReducerHandle<IntWritable, ?> reduceHandle, int value) {
     IntWritable tmp = reusableInt;
     tmp.set(value);
     reduceHandle.reduce(tmp);
   }
 
-  public void reduceShort(ReducerHandle<ShortWritable, ?> reduceHandle, short value) {
+  public void reduceShort(
+      ReducerHandle<ShortWritable, ?> reduceHandle, short value) {
     ShortWritable tmp = reusableShort;
     tmp.set(value);
     reduceHandle.reduce(tmp);
   }
 
-  public void reduceByte(ReducerHandle<ByteWritable, ?> reduceHandle, byte value) {
+  public void reduceByte(
+      ReducerHandle<ByteWritable, ?> reduceHandle, byte value) {
     ByteWritable tmp = reusableByte;
     tmp.set(value);
     reduceHandle.reduce(tmp);
   }
 
-  public <V> V getMappedLong(MapHandle<LongWritable, V> map, long value) {
+  public <T> T getMappedLong(
+      MapHandle<LongWritable, T> map, long value) {
     LongWritable tmp = reusableLong;
     tmp.set(value);
     return map.get(tmp);
   }
 
-  public <V> V getMappedInt(MapHandle<IntWritable, V> map, int value) {
+  public <T> T getMappedInt(
+      MapHandle<IntWritable, T> map, int value) {
     IntWritable tmp = reusableInt;
     tmp.set(value);
     return map.get(tmp);
   }
 
-  public <V> V getMappedShort(MapHandle<ShortWritable, V> map, short value) {
+  public <T> T getMappedShort(
+      MapHandle<ShortWritable, T> map, short value) {
     ShortWritable tmp = reusableShort;
     tmp.set(value);
     return map.get(tmp);
   }
 
-  public <V> V getMappedByte(MapHandle<ByteWritable, V> map, byte value) {
+  public <T> T getMappedByte(
+      MapHandle<ByteWritable, T> map, byte value) {
     ByteWritable tmp = reusableByte;
     tmp.set(value);
     return map.get(tmp);

@@ -121,7 +121,8 @@ final class BlockMasterApiWrapper implements BlockMasterApi,
   @Override
   public <T> BroadcastHandle<T> broadcast(T object) {
     BroadcastHandleImpl<T> handle = new BroadcastHandleImpl<>();
-    master.broadcast(handle.getName(), KryoWritableWrapper.wrapIfNeeded(object));
+    master.broadcast(
+        handle.getName(), KryoWritableWrapper.wrapIfNeeded(object));
     return handle;
   }
 
