@@ -236,7 +236,10 @@ public class Pieces {
         return new InnerVertexSender() {
           @Override
           public void vertexSend(Vertex<I, V, E> vertex) {
-            handle.reduce(valueSupplier.get(vertex));
+            S value = valueSupplier.get(vertex);
+            if (value != null) {
+              handle.reduce(value);
+            }
           }
         };
       }

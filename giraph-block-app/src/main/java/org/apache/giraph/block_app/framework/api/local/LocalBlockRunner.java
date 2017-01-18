@@ -52,6 +52,7 @@ import org.apache.hadoop.util.Progressable;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * Local in-memory Block application job runner.
@@ -176,7 +177,8 @@ public class LocalBlockRunner {
           }
         }));
 
-    ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+    ExecutorService executor = Executors.newFixedThreadPool(
+        numThreads, new ThreadFactoryBuilder().setDaemon(true).build());
 
     if (runAllChecks) {
       for (Vertex<I, V, E> vertex : graph) {

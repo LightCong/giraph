@@ -16,7 +16,7 @@ import org.apache.giraph.block_app.test_setup.graphs.EachVertexInit;
 import org.apache.giraph.block_app.test_setup.graphs.Small1GraphInit;
 import org.apache.giraph.conf.GiraphConfiguration;
 import org.apache.giraph.function.ObjectTransfer;
-import org.apache.giraph.function.primitive.Int2IntFunction;
+import org.apache.giraph.function.primitive.func.Int2IntFunction;
 import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.types.ops.collections.array.WIntArrayList;
 import org.apache.hadoop.io.IntWritable;
